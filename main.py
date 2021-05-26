@@ -1,8 +1,8 @@
-from pokemon import Pokemon
+#! python
+from CaixaEletronico import Conta
 
-pikachu = Pokemon('Pikachu', 'Fogo', 100, 75)
+cliente = Conta('Vanessa', 1)
 
-charmander = Pokemon('Charmander', 'Água', 75, 100)
-
-print(pikachu.nome)
-print(charmander.tipo)
+print(cliente.sacar(0))
+print(cliente.depositar(100))
+print(cliente)
