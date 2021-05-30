@@ -79,14 +79,13 @@ if __name__ == '__main__':
         print("5 - Ir à academia")
         print("6 - Jogar video game")
         print("7 - Mexer no celular")
-        print("8 - Ir à academia")
-        print("9 - Ir ao mercado")
-        print("10 - Preparar a aula")
-        print("11 - Ir trabalhar")
+        print("8 - Ir ao mercado")
+        print("9 - Preparar a aula")
+        print("10 - Ir trabalhar")
         print("0 - Sair do jogo")
         opcao = int(input("Escolha sua ação: "))
         print("")
-        if(0 <= opcao <= 11):
+        if(0 <= opcao <= 10):
             if(opcao == 1):
                 personagem.com_sujeira(False)
                 relogio.avancaTempo(20)
@@ -117,14 +116,24 @@ if __name__ == '__main__':
                 lista_soneca = [num for num in range(1, 101) if num % 5 == 0]
                 index_soneca = randint(0, len(lista_soneca) - 1)
                 duracao_soneca = lista_soneca[index_soneca]
-                print(f'Você tirou uma soneca de { duracao_soneca} minutos.')
+                print(f'Você tirou uma soneca de {duracao_soneca} minutos.')
                 relogio.avancaTempo(duracao_soneca)
             elif(opcao == 5):
                 pass
             elif(opcao == 6):
-                pass
+                lista_game = [num for num in range(30, 176) if num % 5 == 0]
+                index_game = randint(0, len(lista_game) - 1)
+                duracao_game = lista_game[index_game]
+                print(f'Você passou {duracao_game} minutos jogando video ' +
+                      'game.')
+                relogio.avancaTempo(duracao_game)
             elif(opcao == 7):
-                pass
+                lista_celular = [num for num in range(1, 61) if num % 5 == 0]
+                index_celular = randint(0, len(lista_celular) - 1)
+                duracao_celular = lista_celular[index_celular]
+                print(f'Você passou {duracao_celular} minutos mexendo no ' +
+                      'celular.')
+                relogio.avancaTempo(duracao_celular)
             elif(opcao == 8):
                 pass
             elif(opcao == 9):
