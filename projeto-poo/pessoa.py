@@ -2,11 +2,17 @@ class Pessoa:
     def __init__(self, nome):
         self.nome = nome
         self.dinheiro = 100
-        self.estressado = 0  # desestrassa se mexer no telefone ou academia...
+        self.estressado = 0
         self.saude = True
         self.contador_academia = 3
         self.fome = True
         self.sujo = True
+
+    def salario(self, recebido):
+        if (recebido > 0):
+            self.dinheiro += recebido
+        else:
+            self.estressado += 50
 
     def com_sujeira(self, sujeira):
         if(sujeira):
@@ -56,26 +62,5 @@ class Pessoa:
         return f'Status -> {self.nome} está {self.estressado}% estressado!' + \
             ' Além disso ele está ' + ('doente', 'saudável')[self.saude] + \
             ', ' + ('sem', 'com')[self.fome] + ' fome e ' + \
-            ('limpo', 'sujo')[self.sujo] + '.'
-
-
-pessoa = Pessoa('David')
-print(pessoa)
-
-pessoa.com_sujeira(False)
-print(pessoa)
-
-pessoa.com_fome(False)
-print(pessoa)
-
-print('Foi malhar')
-
-pessoa.academia(True)
-print(pessoa)
-
-pessoa.com_sujeira(False)
-pessoa.com_fome(False)
-print(pessoa)
-
-pessoa.dormir()
-print(pessoa)
+            ('limpo', 'sujo')[self.sujo] + '. O dinheiro em conta é ' + \
+            f'R${self.dinheiro}.'
