@@ -1,9 +1,8 @@
-# Fazer a nossa historinha, nesse arquivo!
-
 from casa import Casa
 from pessoa import Pessoa
 from relogio import Relogio
 
+from random import randint
 
 if __name__ == '__main__':
 
@@ -53,7 +52,7 @@ if __name__ == '__main__':
           'Isso vai te ajudar a manter os níveis de saúde e estresse ' +
           'controlados.')
 
-    nome = input('Qual sera o nome do seu personagem? ')
+    nome = input('Qual será o nome do seu personagem? ')
 
     personagem = Pessoa(nome)
     relogio = Relogio()
@@ -61,11 +60,8 @@ if __name__ == '__main__':
 
     while True:
         print("=" * 100)
-        print('')
         print(personagem)
-        print('')
         print(relogio)
-        print('')
         print(casa)
         if(relogio.horas < 11):
             print('\nVocê tem que trabalhar às 12h, então saia de casa antes '
@@ -89,32 +85,40 @@ if __name__ == '__main__':
         print("11 - Ir trabalhar")
         print("0 - Sair do jogo")
         opcao = int(input("Escolha sua ação: "))
+        print("")
         if(0 <= opcao <= 11):
             if(opcao == 1):
                 personagem.com_sujeira(False)
                 relogio.avancaTempo(20)
-                print(personagem)
-                print(relogio)
             elif(opcao == 2):
                 if casa.comida > 0:
                     personagem.com_fome(False)
                     relogio.avancaTempo(45)
                     casa.consumo()
-                    print(personagem)
-                    print(relogio)
-                    print(casa)
                 else:
                     print('Você está sem comida em casa!')
                     print('Para comer peça um ifood ou vá ao mercado.\n')
                     personagem.estresse(30)
                     relogio.avancaTempo(20)
-                    print(personagem)
-                    print(relogio)
-                    print(casa)
             elif(opcao == 3):
-                pass
+                PRECO_ALIMENTO = 25
+                if(personagem.dinheiro >= PRECO_ALIMENTO):
+                    personagem.dinheiro -= PRECO_ALIMENTO
+                    relogio.avancaTempo(75)
+                else:
+                    print(f'O valor do alimento é R${PRECO_ALIMENTO} e você ' +
+                          f'só possui R${personagem.dinheiro}.'
+                          )
+                    print('Saldo insulficiente!')
+                    personagem.estresse(50)
+                    relogio.avancaTempo(30)
+
             elif(opcao == 4):
-                pass
+                lista_soneca = [num for num in range(1, 101) if num % 5 == 0]
+                index_soneca = randint(0, len(lista_soneca) - 1)
+                duracao_soneca = lista_soneca[index_soneca]
+                print(f'Você tirou uma soneca de { duracao_soneca} minutos.')
+                relogio.avancaTempo(duracao_soneca)
             elif(opcao == 5):
                 pass
             elif(opcao == 6):
@@ -131,6 +135,11 @@ if __name__ == '__main__':
                 pass
             elif(opcao == 0):
                 break
+
+            print('')
+            print(personagem)
+            print(relogio)
+            print(casa)
         else:
             print('Opção inválida! Tente novamente.')
 
