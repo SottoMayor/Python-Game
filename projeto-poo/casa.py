@@ -29,9 +29,3 @@ class Casa:
         return f'Casa -> Você tem {self.comida} quantidade de ' +\
             'comidas e você ' + ('não ', '')[self.preparar_aula] +\
             'preparou a aula.'
-
-
-casa = Casa()
-print(casa)
-casa.preparacao_aula(True)
-print(casa)

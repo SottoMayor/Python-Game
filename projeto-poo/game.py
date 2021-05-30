@@ -4,6 +4,14 @@ from relogio import Relogio
 
 from random import randint
 
+
+def aleatorios_multiplos_5(lim_inf=1, lim_sup=100):
+    lista = [num for num in range(lim_inf, lim_sup + 1) if num % 5 == 0]
+    index = randint(0, len(lista) - 1)
+    resultado = lista[index]
+    return resultado
+
+
 if __name__ == '__main__':
 
     print('\nBem-vindo ao jogo da vida! Desenvolvido por David Sotto, ' +
@@ -113,24 +121,18 @@ if __name__ == '__main__':
                     relogio.avancaTempo(30)
 
             elif(opcao == 4):
-                lista_soneca = [num for num in range(1, 101) if num % 5 == 0]
-                index_soneca = randint(0, len(lista_soneca) - 1)
-                duracao_soneca = lista_soneca[index_soneca]
+                duracao_soneca = aleatorios_multiplos_5(1, 100)
                 print(f'Você tirou uma soneca de {duracao_soneca} minutos.')
                 relogio.avancaTempo(duracao_soneca)
             elif(opcao == 5):
                 pass
             elif(opcao == 6):
-                lista_game = [num for num in range(30, 176) if num % 5 == 0]
-                index_game = randint(0, len(lista_game) - 1)
-                duracao_game = lista_game[index_game]
+                duracao_game = aleatorios_multiplos_5(30, 175)
                 print(f'Você passou {duracao_game} minutos jogando video ' +
                       'game.')
                 relogio.avancaTempo(duracao_game)
             elif(opcao == 7):
-                lista_celular = [num for num in range(1, 61) if num % 5 == 0]
-                index_celular = randint(0, len(lista_celular) - 1)
-                duracao_celular = lista_celular[index_celular]
+                duracao_celular = aleatorios_multiplos_5(1, 60)
                 print(f'Você passou {duracao_celular} minutos mexendo no ' +
                       'celular.')
                 relogio.avancaTempo(duracao_celular)
@@ -153,3 +155,4 @@ if __name__ == '__main__':
             print('Opção inválida! Tente novamente.')
 
 print('JOGO FINALIZADO!')
+
