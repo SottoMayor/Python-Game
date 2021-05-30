@@ -65,6 +65,8 @@ if __name__ == '__main__':
         print(personagem)
         print('')
         print(relogio)
+        print('')
+        print(casa)
         if(relogio.horas < 11):
             print('\nVocê tem que trabalhar às 12h, então saia de casa antes '
                   + 'das 11h. Não esqueca de preparar sua aula, antes de sair '
@@ -87,6 +89,49 @@ if __name__ == '__main__':
         print("11 - Ir trabalhar")
         print("0 - Sair do jogo")
         opcao = int(input("Escolha sua ação: "))
-        break
+        if(0 <= opcao <= 11):
+            if(opcao == 1):
+                personagem.com_sujeira(False)
+                relogio.avancaTempo(20)
+                print(personagem)
+                print(relogio)
+            elif(opcao == 2):
+                if casa.comida > 0:
+                    personagem.com_fome(False)
+                    relogio.avancaTempo(45)
+                    casa.consumo()
+                    print(personagem)
+                    print(relogio)
+                    print(casa)
+                else:
+                    print('Você está sem comida em casa!')
+                    print('Para comer peça um ifood ou vá ao mercado.\n')
+                    personagem.estresse(30)
+                    relogio.avancaTempo(20)
+                    print(personagem)
+                    print(relogio)
+                    print(casa)
+            elif(opcao == 3):
+                pass
+            elif(opcao == 4):
+                pass
+            elif(opcao == 5):
+                pass
+            elif(opcao == 6):
+                pass
+            elif(opcao == 7):
+                pass
+            elif(opcao == 8):
+                pass
+            elif(opcao == 9):
+                pass
+            elif(opcao == 10):
+                pass
+            elif(opcao == 11):
+                pass
+            elif(opcao == 0):
+                break
+        else:
+            print('Opção inválida! Tente novamente.')
 
 print('JOGO FINALIZADO!')
