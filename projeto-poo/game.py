@@ -60,17 +60,21 @@ if __name__ == '__main__':
           'Isso vai te ajudar a manter os níveis de saúde e estresse ' +
           'controlados.')
 
+    print("-*-" * 30)
+
     nome = input('Qual será o nome do seu personagem? ')
 
+    print('')
     personagem = Pessoa(nome)
     relogio = Relogio()
     casa = Casa()
 
+    print(personagem)
+    print(relogio)
+    print(casa)
+
     while True:
         print("=" * 100)
-        print(personagem)
-        print(relogio)
-        print(casa)
         if(relogio.horas < 11):
             print('\nVocê tem que trabalhar às 12h, então saia de casa antes '
                   + 'das 11h. Não esqueca de preparar sua aula, antes de sair '
@@ -124,22 +128,32 @@ if __name__ == '__main__':
                 duracao_soneca = aleatorios_multiplos_5(1, 100)
                 print(f'Você tirou uma soneca de {duracao_soneca} minutos.')
                 relogio.avancaTempo(duracao_soneca)
+                perc_desestresse = int((duracao_soneca/100) * 100)
+                personagem.desestresse(perc_desestresse)
             elif(opcao == 5):
-                pass
+                personagem.academia(True)
+                print('Você foi à academia! E gastou 15 min de caminhada.')
+                relogio.avancaTempo(105)
             elif(opcao == 6):
                 duracao_game = aleatorios_multiplos_5(30, 175)
                 print(f'Você passou {duracao_game} minutos jogando video ' +
                       'game.')
                 relogio.avancaTempo(duracao_game)
+                perc_desestresse = int((duracao_game/175) * 100)
+                personagem.desestresse(perc_desestresse)
             elif(opcao == 7):
                 duracao_celular = aleatorios_multiplos_5(1, 60)
                 print(f'Você passou {duracao_celular} minutos mexendo no ' +
                       'celular.')
                 relogio.avancaTempo(duracao_celular)
+                perc_desestresse = int((duracao_game/60) * 100)
+                personagem.desestresse(perc_desestresse)
             elif(opcao == 8):
                 pass
             elif(opcao == 9):
-                pass
+                casa.preparacao_aula(True)
+                print('Você preparou sua aula!')
+                relogio.avancaTempo(30)
             elif(opcao == 10):
                 pass
             elif(opcao == 11):
@@ -155,4 +169,3 @@ if __name__ == '__main__':
             print('Opção inválida! Tente novamente.')
 
 print('JOGO FINALIZADO!')
-

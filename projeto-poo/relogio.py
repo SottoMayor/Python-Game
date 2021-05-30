@@ -17,5 +17,9 @@ class Relogio:
         return (self.horas > 19 or (self.horas == 19 and self.minutos > 0))
 
     def __str__(self):
-        return f"Relógio -> {round(self.horas)}:{round(self.minutos)} " + \
-            f"do dia {self.dia}"
+        if (0 <= self.minutos <= 9):
+            return f"Relógio -> {round(self.horas)}:0{round(self.minutos)}" + \
+                f"h do dia {self.dia}"
+        else:
+            return f"Relógio -> {round(self.horas)}:{round(self.minutos)}" + \
+                f"h do dia {self.dia}"
