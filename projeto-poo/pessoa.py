@@ -11,8 +11,6 @@ class Pessoa:
     def salario(self, recebido):
         if (recebido > 0):
             self.dinheiro += recebido
-        else:
-            self.estressado += 50
 
     def com_sujeira(self, sujeira):
         if(sujeira):

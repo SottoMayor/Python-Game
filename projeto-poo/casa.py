@@ -16,8 +16,10 @@ class Casa:
         preco_alimento = 20
         qtt_alimento = floor(dinheiro / preco_alimento)
         troco = dinheiro % preco_alimento
-        dinheiro = troco
         self.comida += qtt_alimento
+        print(f'Você comprou {qtt_alimento} alimentos')
+        print(f'Com R${dinheiro} seu troco é {troco}')
+        return troco
 
     def preparacao_aula(self, preparada):
         if(preparada):

@@ -146,18 +146,72 @@ if __name__ == '__main__':
                 print(f'Você passou {duracao_celular} minutos mexendo no ' +
                       'celular.')
                 relogio.avancaTempo(duracao_celular)
-                perc_desestresse = int((duracao_game/60) * 100)
+                perc_desestresse = int((duracao_celular/60) * 100)
                 personagem.desestresse(perc_desestresse)
             elif(opcao == 8):
-                pass
+                print('No mercado cada alimento custa R$20, e você tem ' +
+                      f'R${personagem.dinheiro}')
+                dinheiro_mercado = float(input('Quanto você deseja gastar? '))
+                if dinheiro_mercado <= personagem.dinheiro:
+                    personagem.dinheiro += casa.mercado(dinheiro_mercado) - \
+                        dinheiro_mercado
+                    print(f'Agora você tem R${personagem.dinheiro} em conta.')
+
+                    personagem.estresse(30)
+                    transito = aleatorios_multiplos_5(20, 100)
+                    relogio.avancaTempo(150 + transito)
+                    print('\nVocê passou 150 min fazendo as compras e pegou ' +
+                          f'{transito} min de transito.')
+                else:
+                    print(f'Você não consegue gastar R${dinheiro_mercado}, ' +
+                          f'pois você possui apenas R${personagem.dinheiro}.')
+                    personagem.estresse(60)
+                    transito = aleatorios_multiplos_5(20, 100)
+                    relogio.avancaTempo(150 + transito)
+                    print('\nVocê não comprou nada, perdeu 150 min fazendo ' +
+                          f'compras e {transito} min de transito.')
             elif(opcao == 9):
                 casa.preparacao_aula(True)
                 print('Você preparou sua aula!')
                 relogio.avancaTempo(30)
             elif(opcao == 10):
-                pass
-            elif(opcao == 11):
-                pass
+                # Verificar se ele preparou a aula e níveis de estresse
+                if (12 <= relogio.horas < 15 or 19 <= relogio.horas < 22):
+                    atraso_horas = relogio.horas-12
+                    atraso_minutos = relogio.minutos
+                    salario_atraso = round((
+                        180-(atraso_horas*60 + atraso_minutos)
+                    ) * 200/180, 2)
+                    print(f'Você está atrasado em {atraso_horas}h e ' +
+                          f'{atraso_minutos} min.')
+                    print('A cada aula(3h trabalhadas) você recebe R$200, ' +
+                          'descontando o atraso, hoje você recebeu R$ ' +
+                          f'{salario_atraso}')
+                    horario_saida = 180-(atraso_horas*60 + atraso_minutos)
+
+                    personagem.salario(salario_atraso)
+                    personagem.estresse(70)
+                    transito = aleatorios_multiplos_5(35, 120)
+                    relogio.avancaTempo(horario_saida + transito)
+
+                    print(f'Você saiu as 15h da aula e pegou {transito} min de'
+                          + ' trânsito')
+
+                else:
+                    print('Você chegou no horário certo, vamos trabalhar!')
+                    print('Você ganhou R$200 reais!')
+                    personagem.salario(200)
+                    personagem.estresse(35)
+                    transito = aleatorios_multiplos_5(35, 120)
+                    hora_saida = 15 - relogio.horas
+                    minutos_saida = 60 - relogio.minutos
+                    horario_saida = 60*hora_saida + minutos_saida
+
+                    relogio.avancaTempo(horario_saida)
+
+                    print(f'Você saiu as 15h da aula e pegou {transito} min de'
+                          + ' trânsito')
+
             elif(opcao == 0):
                 break
 
