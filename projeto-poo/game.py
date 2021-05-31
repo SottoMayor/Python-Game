@@ -93,11 +93,12 @@ if __name__ == '__main__':
         print("7 - Mexer no celular")
         print("8 - Ir ao mercado")
         print("9 - Preparar a aula")
-        print("10 - Ir trabalhar")
+        print("10 - Ir trabalhar[presencial]")
+        print("11 - Ir trabalhar[EAD]")
         print("0 - Sair do jogo")
         opcao = int(input("Escolha sua ação: "))
         print("")
-        if(0 <= opcao <= 10):
+        if(0 <= opcao <= 11):
             if(opcao == 1):
                 personagem.com_sujeira(False)
                 relogio.avancaTempo(20)
@@ -175,46 +176,91 @@ if __name__ == '__main__':
                 print('Você preparou sua aula!')
                 relogio.avancaTempo(30)
             elif(opcao == 10):
-                # Verificar se ele preparou a aula e níveis de estresse
-                if (12 <= relogio.horas < 15 or 19 <= relogio.horas < 22):
-                    atraso_horas = relogio.horas-12
-                    atraso_minutos = relogio.minutos
-                    salario_atraso = round((
-                        180-(atraso_horas*60 + atraso_minutos)
-                    ) * 200/180, 2)
-                    print(f'Você está atrasado em {atraso_horas}h e ' +
-                          f'{atraso_minutos} min.')
-                    print('A cada aula(3h trabalhadas) você recebe R$200, ' +
-                          'descontando o atraso, hoje você recebeu R$ ' +
-                          f'{salario_atraso}')
-                    horario_saida = 180-(atraso_horas*60 + atraso_minutos)
+                # Verificar se ele preparou a aula e níveis de estresse, se ta
+                # limpo, alimentado -> Isso afeta o rendimento!
+                if(10 <= relogio.horas < 15):
+                    if (12 <= relogio.horas < 15):
+                        atraso_horas = relogio.horas-12
+                        atraso_minutos = relogio.minutos
+                        salario_atraso = round((
+                            180-(atraso_horas*60 + atraso_minutos)
+                        ) * 200/180, 2)
+                        print(f'Você está atrasado em {atraso_horas}h e ' +
+                              f'{atraso_minutos} min.')
+                        print('A cada aula(3h trabalhadas) você recebe R$200, '
+                              + 'descontando o atraso, hoje você recebeu R$ ' +
+                              f'{salario_atraso}')
+                        horario_saida = 180-(atraso_horas*60 + atraso_minutos)
 
-                    personagem.salario(salario_atraso)
-                    personagem.estresse(70)
-                    transito = aleatorios_multiplos_5(35, 120)
-                    relogio.avancaTempo(horario_saida + transito)
+                        personagem.salario(salario_atraso)
+                        personagem.estresse(70)
+                        transito = aleatorios_multiplos_5(35, 120)
+                        relogio.avancaTempo(horario_saida + transito)
 
-                    print(f'Você saiu as 15h da aula e pegou {transito} min de'
-                          + ' trânsito')
+                        print(f'Você saiu as 15h da aula e pegou {transito} '
+                              + 'min de trânsito')
 
+                    else:
+                        print('Você chegou no horário certo, vamos trabalhar!')
+                        print('Você ganhou R$200 reais!')
+                        personagem.salario(200)
+                        personagem.estresse(35)
+                        transito = aleatorios_multiplos_5(35, 120)
+                        hora_saida = 15 - relogio.horas
+                        minutos_saida = 60 - relogio.minutos
+                        horario_saida = 60*hora_saida + minutos_saida
+
+                        relogio.avancaTempo(horario_saida)
+
+                        print(f'Você saiu as 15h da aula e pegou {transito} '
+                              + 'min de trânsito')
                 else:
-                    print('Você chegou no horário certo, vamos trabalhar!')
-                    print('Você ganhou R$200 reais!')
-                    personagem.salario(200)
-                    personagem.estresse(35)
-                    transito = aleatorios_multiplos_5(35, 120)
-                    hora_saida = 15 - relogio.horas
-                    minutos_saida = 60 - relogio.minutos
-                    horario_saida = 60*hora_saida + minutos_saida
+                    print('A aula presencial só começa às 12h, e você só pode '
+                          + 'se conectar a partir das 10h.')
 
-                    relogio.avancaTempo(horario_saida)
+            elif(opcao == 11):
+                # Verificar se ele preparou a aula e níveis de estresse
+                if(17 <= relogio.horas < 22):
+                    if (19 <= relogio.horas < 22):
+                        atraso_horas = relogio.horas-19
+                        atraso_minutos = relogio.minutos
+                        salario_atraso = round((
+                            180-(atraso_horas*60 + atraso_minutos)
+                        ) * 200/180, 2)
+                        print(f'Você está atrasado em {atraso_horas}h e ' +
+                              f'{atraso_minutos} min.')
+                        print('A cada aula(3h trabalhadas) você recebe R$200, '
+                              + 'descontando o atraso, hoje você recebeu R$ ' +
+                              f'{salario_atraso}')
+                        horario_saida = 180-(atraso_horas*60 + atraso_minutos)
 
-                    print(f'Você saiu as 15h da aula e pegou {transito} min de'
-                          + ' trânsito')
+                        personagem.salario(salario_atraso)
+                        personagem.estresse(70)
+                        print('Você saiu as 22h da aula EAD.')
+
+                    else:
+                        print('Você chegou no horário certo, vamos trabalhar!')
+                        print('Você ganhou R$200 reais!')
+                        personagem.salario(200)
+                        personagem.estresse(35)
+                        transito = aleatorios_multiplos_5(35, 120)
+                        hora_saida = 21 - relogio.horas
+                        minutos_saida = 60 - relogio.minutos
+                        horario_saida = 60*hora_saida + minutos_saida
+
+                        relogio.avancaTempo(horario_saida)
+                else:
+                    print('A aula EAD só começa às 19h, e você só pode ' +
+                          'se conectar a partir das 17h.')
 
             elif(opcao == 0):
                 break
 
+            '''
+            -> Quando for as 0h às 7h o personagem deve obrigatoriamente
+            estar dormindo!
+            -> Incrementar um dia na classe relógio!
+            '''
             print('')
             print(personagem)
             print(relogio)
