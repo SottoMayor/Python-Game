@@ -133,6 +133,7 @@ if __name__ == '__main__':
                 personagem.desestresse(perc_desestresse)
             elif(opcao == 5):
                 personagem.academia(True)
+                personagem.desestresse(70)
                 print('Você foi à academia! E gastou 15 min de caminhada.')
                 relogio.avancaTempo(105)
             elif(opcao == 6):
@@ -176,20 +177,51 @@ if __name__ == '__main__':
                 print('Você preparou sua aula!')
                 relogio.avancaTempo(30)
             elif(opcao == 10):
-                # Verificar se ele preparou a aula e níveis de estresse, se ta
-                # limpo, alimentado -> Isso afeta o rendimento!
+                SALARIO = 200
+                PENALIDADE = 0
                 if(10 <= relogio.horas < 15):
+
+                    if(personagem.estressado >= 70):
+                        print('Você foi dar a aula muito estressado,' +
+                              'e acabou xingando o diretor! Por isso, ' +
+                              'recebeu uma multa de 20% de redução do salário.'
+                              )
+                        PENALIDADE += 20/100
+
+                    if(personagem.sujo):
+                        print('Você foi dar a aula fedendo a cecê! Isso ' +
+                              'incomodou bastante, e você foi penalizado com '
+                              + 'de 10% do salário.'
+                              )
+                        PENALIDADE += 10/100
+
+                    if(personagem.fome):
+                        print('Você foi dar a aula com fome, e seu rendimento '
+                              + 'abaixo do esperado! Você foi penalizado com '
+                              + 'de 10% do salário.'
+                              )
+                        PENALIDADE += 10/100
+
+                    if(not(casa.preparar_aula)):
+                        print('Você não preparou a aula, nesse caso seu ' +
+                              'rendimento não foi satisfatório, por isso ' +
+                              'sofrerá uma penalidade de redução de 30% ' +
+                              'do salário')
+                        PENALIDADE += 30/100
+
+                    SALARIO += -SALARIO*PENALIDADE
+
                     if (12 <= relogio.horas < 15):
                         atraso_horas = relogio.horas-12
                         atraso_minutos = relogio.minutos
                         salario_atraso = round((
                             180-(atraso_horas*60 + atraso_minutos)
-                        ) * 200/180, 2)
+                        ) * SALARIO/180, 2)
                         print(f'Você está atrasado em {atraso_horas}h e ' +
                               f'{atraso_minutos} min.')
                         print('A cada aula(3h trabalhadas) você recebe R$200, '
-                              + 'descontando o atraso, hoje você recebeu R$ ' +
-                              f'{salario_atraso}')
+                              + 'descontando todas as penalidades você recebeu'
+                              + f' {salario_atraso}')
                         horario_saida = 180-(atraso_horas*60 + atraso_minutos)
 
                         personagem.salario(salario_atraso)
@@ -202,46 +234,81 @@ if __name__ == '__main__':
 
                     else:
                         print('Você chegou no horário certo, vamos trabalhar!')
-                        print('Você ganhou R$200 reais!')
-                        personagem.salario(200)
+                        print(f'Você ganhou R${SALARIO} reais!')
+                        personagem.salario(SALARIO)
                         personagem.estresse(35)
                         transito = aleatorios_multiplos_5(35, 120)
-                        hora_saida = 15 - relogio.horas
+                        hora_saida = 14 - relogio.horas
                         minutos_saida = 60 - relogio.minutos
                         horario_saida = 60*hora_saida + minutos_saida
 
-                        relogio.avancaTempo(horario_saida)
+                        relogio.avancaTempo(horario_saida + transito)
 
                         print(f'Você saiu as 15h da aula e pegou {transito} '
                               + 'min de trânsito')
+
+                    casa.preparar_aula = False
                 else:
                     print('A aula presencial só começa às 12h, e você só pode '
-                          + 'se conectar a partir das 10h.')
+                          + 'se chegar a partir das 10h.')
 
             elif(opcao == 11):
-                # Verificar se ele preparou a aula e níveis de estresse
+                SALARIO = 200
+                PENALIDADE = 0
                 if(17 <= relogio.horas < 22):
-                    if (19 <= relogio.horas < 22):
+
+                    if(personagem.estressado >= 70):
+                        print('Você foi dar a aula muito estressado,' +
+                              'e acabou xingando o diretor! Por isso, ' +
+                              'recebeu uma multa de 20% de redução do salário.'
+                              )
+                        PENALIDADE += 20/100
+
+                    if(personagem.sujo):
+                        print('Você foi dar a aula fedendo a cecê! Isso ' +
+                              'incomodou bastante, e você foi penalizado com '
+                              + 'de 10% do salário.'
+                              )
+                        PENALIDADE += 10/100
+
+                    if(personagem.fome):
+                        print('Você foi dar a aula com fome, e seu rendimento '
+                              + 'abaixo do esperado! Você foi penalizado com '
+                              + 'de 10% do salário.'
+                              )
+                        PENALIDADE += 10/100
+
+                    if(not(casa.preparar_aula)):
+                        print('Você não preparou a aula, nesse caso seu ' +
+                              'rendimento não foi satisfatório, por isso ' +
+                              'sofrerá uma penalidade de redução de 30% ' +
+                              'do salário')
+                        PENALIDADE += 30/100
+
+                    SALARIO += -SALARIO*PENALIDADE
+
+                    if(19 <= relogio.horas < 22):
                         atraso_horas = relogio.horas-19
                         atraso_minutos = relogio.minutos
                         salario_atraso = round((
                             180-(atraso_horas*60 + atraso_minutos)
-                        ) * 200/180, 2)
+                        ) * SALARIO/180, 2)
                         print(f'Você está atrasado em {atraso_horas}h e ' +
                               f'{atraso_minutos} min.')
                         print('A cada aula(3h trabalhadas) você recebe R$200, '
-                              + 'descontando o atraso, hoje você recebeu R$ ' +
-                              f'{salario_atraso}')
+                              + 'descontando todas as penalidades você recebeu'
+                              + f' {salario_atraso}')
                         horario_saida = 180-(atraso_horas*60 + atraso_minutos)
 
                         personagem.salario(salario_atraso)
                         personagem.estresse(70)
+                        relogio.avancaTempo(horario_saida)
                         print('Você saiu as 22h da aula EAD.')
 
                     else:
                         print('Você chegou no horário certo, vamos trabalhar!')
-                        print('Você ganhou R$200 reais!')
-                        personagem.salario(200)
+                        print(f'Você ganhou R${SALARIO} reais!')
+                        personagem.salario(SALARIO)
                         personagem.estresse(35)
                         transito = aleatorios_multiplos_5(35, 120)
                         hora_saida = 21 - relogio.horas
@@ -253,6 +320,7 @@ if __name__ == '__main__':
                     print('A aula EAD só começa às 19h, e você só pode ' +
                           'se conectar a partir das 17h.')
 
+                casa.preparar_aula = False
             elif(opcao == 0):
                 break
 
