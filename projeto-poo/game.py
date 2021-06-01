@@ -6,8 +6,16 @@ from random import randint
 
 
 def aleatorios_multiplos_5(lim_inf=1, lim_sup=100):
+    '''
+    Essa função recebe dois argumentos inteiros, o limite inferior e
+    superior de um intervalo, e gera uma lista com multiplos de 5.
+    Ela retorna um número aleatório dessa lista.
+    '''
+    # Gerando a lista de multiplos de 5
     lista = [num for num in range(lim_inf, lim_sup + 1) if num % 5 == 0]
+    # Escolhendo um índice aleatório
     index = randint(0, len(lista) - 1)
+    # Escolhendo aletoriamente um número na lista
     resultado = lista[index]
     return resultado
 
@@ -75,6 +83,7 @@ if __name__ == '__main__':
 
     while True:
         print("=" * 100)
+        # Dicas para ir trabalhar presencial
         if(relogio.horas < 11):
             print('\nVocê tem que trabalhar às 12h, então saia de casa antes '
                   + 'das 11h. Não esqueca de preparar sua aula, antes de sair '
@@ -82,7 +91,17 @@ if __name__ == '__main__':
         elif(11 <= relogio.horas < 12):
             print('Já passou das 11h, você poderá se atrasar! Saia agora para'
                   + ' ir trabalhar.')
+        elif(12 <= relogio.horas < 15):
+            print('Você está atrasado! Vá trabalhar agora!.')
 
+        # Dicas para ir trabalhar EAD
+        if(17 <= relogio.horas <= 18):
+            print('\nVocê tem que trabalhar às 19h, não esqueça de '
+                  + 'preparar a aula e cuidado para não se atrasar! ')
+        elif(19 <= relogio.horas < 22):
+            print('Você está atrasado! Vá trabalhar agora!.')
+
+        # Ações que o personagem pode fazer
         print("\nAções:")
         print("1 - Tomar banho e escovar os dentes")
         print("2 - Se alimentar")
@@ -98,10 +117,13 @@ if __name__ == '__main__':
         print("0 - Sair do jogo")
         opcao = int(input("Escolha sua ação: "))
         print("")
+        # Validação de ações
         if(0 <= opcao <= 11):
+            # Tomar banho e escovar os dentes
             if(opcao == 1):
                 personagem.com_sujeira(False)
                 relogio.avancaTempo(20)
+            # Se alimentar
             elif(opcao == 2):
                 if casa.comida > 0:
                     personagem.com_fome(False)
@@ -112,8 +134,11 @@ if __name__ == '__main__':
                     print('Para comer peça um ifood ou vá ao mercado.\n')
                     personagem.estresse(30)
                     relogio.avancaTempo(20)
+            #  Pedir um ifood
             elif(opcao == 3):
                 PRECO_ALIMENTO = 25
+                # Verificando se o personagem tem dinheiro para
+                # fazer o pedido
                 if(personagem.dinheiro >= PRECO_ALIMENTO):
                     personagem.dinheiro -= PRECO_ALIMENTO
                     relogio.avancaTempo(75)
@@ -124,18 +149,20 @@ if __name__ == '__main__':
                     print('Saldo insulficiente!')
                     personagem.estresse(50)
                     relogio.avancaTempo(30)
-
+            # Dar uma soneca
             elif(opcao == 4):
                 duracao_soneca = aleatorios_multiplos_5(1, 100)
                 print(f'Você tirou uma soneca de {duracao_soneca} minutos.')
                 relogio.avancaTempo(duracao_soneca)
                 perc_desestresse = int((duracao_soneca/100) * 100)
                 personagem.desestresse(perc_desestresse)
+            # Ir à academia
             elif(opcao == 5):
                 personagem.academia(True)
                 personagem.desestresse(70)
                 print('Você foi à academia! E gastou 15 min de caminhada.')
                 relogio.avancaTempo(105)
+            # Jogar video game
             elif(opcao == 6):
                 duracao_game = aleatorios_multiplos_5(30, 175)
                 print(f'Você passou {duracao_game} minutos jogando video ' +
@@ -143,6 +170,7 @@ if __name__ == '__main__':
                 relogio.avancaTempo(duracao_game)
                 perc_desestresse = int((duracao_game/175) * 100)
                 personagem.desestresse(perc_desestresse)
+            # Mexer no celular
             elif(opcao == 7):
                 duracao_celular = aleatorios_multiplos_5(1, 60)
                 print(f'Você passou {duracao_celular} minutos mexendo no ' +
@@ -150,13 +178,16 @@ if __name__ == '__main__':
                 relogio.avancaTempo(duracao_celular)
                 perc_desestresse = int((duracao_celular/60) * 100)
                 personagem.desestresse(perc_desestresse)
+            # Ir ao mercado
             elif(opcao == 8):
                 print('No mercado cada alimento custa R$20, e você tem ' +
                       f'R${personagem.dinheiro}')
                 dinheiro_mercado = float(input('Quanto você deseja gastar? '))
+                # Verificando se a entrada é menor ou igual ao dinheiro
+                # disponível
                 if dinheiro_mercado <= personagem.dinheiro:
-                    personagem.dinheiro += casa.mercado(dinheiro_mercado) - \
-                        dinheiro_mercado
+                    personagem.dinheiro += casa.mercado(dinheiro_mercado) \
+                        - dinheiro_mercado
                     print(f'Agora você tem R${personagem.dinheiro} em conta.')
 
                     personagem.estresse(30)
@@ -172,22 +203,27 @@ if __name__ == '__main__':
                     relogio.avancaTempo(150 + transito)
                     print('\nVocê não comprou nada, perdeu 150 min fazendo ' +
                           f'compras e {transito} min de transito.')
+            # Preparar a aula
             elif(opcao == 9):
                 casa.preparacao_aula(True)
                 print('Você preparou sua aula!')
                 relogio.avancaTempo(30)
+            # Ir trabalhar[presencial]
             elif(opcao == 10):
+                # O Salário é a diária por aula
                 SALARIO = 200
+                # A penalidade é acumulativa e desconta no salário.
                 PENALIDADE = 0
+                # Validando horário em que o personagem pode dar a aula
                 if(10 <= relogio.horas < 15):
-
+                    # Penalidade se o personagem está muito estressado
                     if(personagem.estressado >= 70):
                         print('Você foi dar a aula muito estressado,' +
                               'e acabou xingando o diretor! Por isso, ' +
                               'recebeu uma multa de 20% de redução do salário.'
                               )
                         PENALIDADE += 20/100
-
+                    # Penalidade se o personagem está sujo
                     if(personagem.sujo):
                         print('Você foi dar a aula fedendo a cecê! Isso ' +
                               'incomodou bastante, e você foi penalizado com '
@@ -195,22 +231,24 @@ if __name__ == '__main__':
                               )
                         PENALIDADE += 10/100
 
+                    # Penalidade se o personagem está com fome
                     if(personagem.fome):
                         print('Você foi dar a aula com fome, e seu rendimento '
                               + 'abaixo do esperado! Você foi penalizado com '
                               + 'de 10% do salário.'
                               )
                         PENALIDADE += 10/100
-
+                    # Penalidade se o personagem não preparou a aula
                     if(not(casa.preparar_aula)):
                         print('Você não preparou a aula, nesse caso seu ' +
                               'rendimento não foi satisfatório, por isso ' +
                               'sofrerá uma penalidade de redução de 30% ' +
                               'do salário')
                         PENALIDADE += 30/100
-
+                    # Descontando as penalidades no salário
                     SALARIO += -SALARIO*PENALIDADE
 
+                    # Verificando se o personagem está atrasado
                     if (12 <= relogio.horas < 15):
                         atraso_horas = relogio.horas-12
                         atraso_minutos = relogio.minutos
@@ -251,19 +289,23 @@ if __name__ == '__main__':
                 else:
                     print('A aula presencial só começa às 12h, e você só pode '
                           + 'se chegar a partir das 10h.')
-
+            # Ir trabalhar[EAD]
             elif(opcao == 11):
+                # O Salário é a diária por aula
                 SALARIO = 200
+                # A penalidade é acumulativa e desconta no salário.
                 PENALIDADE = 0
+                # Validando horário em que o personagem pode dar a aula
                 if(17 <= relogio.horas < 22):
 
+                    # Penalidade se o personagem está muito estressado
                     if(personagem.estressado >= 70):
                         print('Você foi dar a aula muito estressado,' +
                               'e acabou xingando o diretor! Por isso, ' +
                               'recebeu uma multa de 20% de redução do salário.'
                               )
                         PENALIDADE += 20/100
-
+                    # Penalidade se o personagem está sujo
                     if(personagem.sujo):
                         print('Você foi dar a aula fedendo a cecê! Isso ' +
                               'incomodou bastante, e você foi penalizado com '
@@ -271,22 +313,24 @@ if __name__ == '__main__':
                               )
                         PENALIDADE += 10/100
 
+                    # Penalidade se o personagem está com fome
                     if(personagem.fome):
                         print('Você foi dar a aula com fome, e seu rendimento '
                               + 'abaixo do esperado! Você foi penalizado com '
                               + 'de 10% do salário.'
                               )
                         PENALIDADE += 10/100
-
+                    # Penalidade se o personagem não preparou a aula
                     if(not(casa.preparar_aula)):
                         print('Você não preparou a aula, nesse caso seu ' +
                               'rendimento não foi satisfatório, por isso ' +
                               'sofrerá uma penalidade de redução de 30% ' +
                               'do salário')
                         PENALIDADE += 30/100
-
+                    # Descontando as penalidades no salário
                     SALARIO += -SALARIO*PENALIDADE
 
+                    # Verificando se o personagem está atrasado
                     if(19 <= relogio.horas < 22):
                         atraso_horas = relogio.horas-19
                         atraso_minutos = relogio.minutos
@@ -321,14 +365,20 @@ if __name__ == '__main__':
                           'se conectar a partir das 17h.')
 
                 casa.preparar_aula = False
+            # Sair do jogo
             elif(opcao == 0):
                 break
 
-            '''
-            -> Quando for as 0h às 7h o personagem deve obrigatoriamente
-            estar dormindo!
-            -> Incrementar um dia na classe relógio!
-            '''
+            # Quando for as 0h às 7h o personagem deve obrigatoriamente
+            # estar dormindo!
+            if(0 <= relogio.horas < 7):
+                print('Seu personagem esta com sono, ' +
+                      'aproveite para tirar uma boa noite de sono.')
+
+                personagem.dormir()
+                relogio.avancaTempo(7*60 - relogio.horas*60)
+                relogio.dia += 1
+
             print('')
             print(personagem)
             print(relogio)

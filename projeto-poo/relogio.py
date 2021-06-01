@@ -9,6 +9,9 @@ class Relogio:
         while(self.minutos >= 60):
             self.minutos -= 60
             self.horas += 1
+        if(self.horas >= 24):
+            self.horas = 0
+            self.minutos = 0
 
     def atrasado_presencial(self):
         return (self.horas > 12 or (self.horas == 12 and self.minutos > 0))
